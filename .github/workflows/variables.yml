@@ -7,8 +7,6 @@ on:
   pull_request:
     branches:
     - master
-env:
-  PYTHON_VERSION: 3.11 # this is the variable at the workflow level and it is created outside the 'jobs' section, it means that the variables can be used by any jobs below
 jobs:
   job1:
     runs-on: ubuntu-latest
