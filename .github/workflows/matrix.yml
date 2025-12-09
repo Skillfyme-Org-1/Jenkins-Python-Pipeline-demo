@@ -13,7 +13,7 @@ jobs:
         strategy:
           matrix:
         # it is like a loop to repeat the steps on each 'operating_system' value
-            operating_system: [ ubuntu_latest, windows-latest ]
+            operating_system: [ ubuntu-latest, windows-latest ]
         runs-on: ${{ matrix.operating_system }}
         steps:
             - name: Clone the repo
