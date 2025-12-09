@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
     - master
+env:
+  PYTHON_VERSION: 3.10 # this is the variable at the workflow level and it is created outside the 'jobs' section, it means that the variables can be used by any jobs below
 jobs:
   job1:
     runs-on: ubuntu-latest
@@ -26,11 +28,26 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     env:
-      PYTHON_VERSION: 3.9
+      PYTHON_VERSION: 3.9 # here we are defining the variables at the job level
     steps:
     - name: Clone the repo
       uses: actions/checkout@v6
     - name: Install python ${{ env.PYTHON_VERSION }} on runner
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install python dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone the repo
+      uses: actions/checkout@v6
+    - name: Install python on runner
+      env:
+        PYTHON_VERSION: 3.12 # here we are defining variables at the step level
       uses: actions/setup-python@v6
       with:
         python-version: ${{ env.PYTHON_VERSION }}
