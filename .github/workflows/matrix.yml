@@ -1,0 +1,32 @@
+name: build nodejs application
+on:
+  # 'on' means mutliple triggers when this workflow can run such as push and pull request events as mentioned below
+  workflow_dispatch:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+jobs:
+  job1:
+    continue-on-error: true # it means if there is any error at any job level, still continue to run
+    strategy:
+      matrix:
+        # it is like a loop to repeat the steps on each 'operating_system' value
+        operating_system: [ ubuntu_latest, windows-latest ]
+    runs-on: ${{ matrix.operating_system }}
+    steps:
+    - name: Clone the repo
+      uses: actions/checkout@v6 # readymade github actions library available to clone the existing repo on the dynamic agent
+    - name: Install nodejs
+      uses: actions/setup-node@v6 # readymade github actions library to install nodejs on the dynamic agent
+      with:
+        node-version: 18
+        cache: 'npm' # installs the npm package manager on the dynamic agent
+    - name: Install node dependencies
+      run: npm ci
+    - name: Execute test cases
+      run: npm test
+    - name: Build the nodejs code
+      run: npm run build
