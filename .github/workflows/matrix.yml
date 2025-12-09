@@ -1,4 +1,4 @@
-name: build nodejs application
+name: Build nodejs application
 on:
   # 'on' means mutliple triggers when this workflow can run such as push and pull request events as mentioned below
   workflow_dispatch:
